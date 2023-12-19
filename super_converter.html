@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
+        function MinutesToHours(){
+            const [amount,setAmount] = React.useState(0);
+            //기억하기! useState = array를 제공함 첫번째 인자로 초기값, 사용할 변수
+            //두번째 인자로는 변수의 값을 변경시킬 함수를 인자로 가짐.
+            //이 함수는 컴포넌트를 새로고침 할때 쓰임! = 자동 리프레쉬해줌~!
+
+            const [invered, setInvered] = React.useState(false);
+
+            const  onChange = (evnet)=>{
+                //console.log("너무 덥다");
+                console.log(event.target.value);
+                setAmount(event.target.value);
+            };
+            const reset = ()=> setAmount(0);
+
+            //반전 시켜주기위해 state를 하나더 만들어줌!
+            const onInvered = ()=> {
+                reset();
+                setInvered((current)=>!current)
+            };
+            return(
+                <div>
+                    <div>
+                        <lable htmlFor="minutes">Minutes</lable><br/>
+                    <input value={invered ? amount*60 :amount } id = "minutes" placeholder ="Minutes" type="number"  onChange ={onChange} disabled={invered} />
+                    </div>
+                    <div> 
+                        <lable htmlFor="hours">Hours</lable><br/>
+                        <input value={invered ? amount : Math.round(amount/60)} id = "hours" placeholder ="Hours" type="number" onChange ={onChange} disabled={!invered} />
+                    </div>
+                    <button onClick ={reset} >Reset</button>
+                    <button onClick ={onInvered} >{invered ? "Turn Back":"Invered"}</button>
+                </div>
+            );
+            /*
+            참고!!
+            lable 태그를 사용할때 input태그와 연결하는 방법은 id와 for를 쓰는 것인데,
+            for와 같이 몇가지 용어들을  JSX는 사용하지 못함.  HTML과 비슷하지만 다른점들이 있음!
+
+            이유는 for는 javascript의 용어이기때문이임 
+            class도 마찬가지임! jsx = className 으로 써야함!
+
+            Ex.)-- for ="hours" = javascript 식
+            <lable htmlFor="hours">Hours</lable>
+            <input id = "hours" type="number" />
+            
+            ---------------------------------------------------------------------------------------
+
+            이제 input이 입력하는 value의 값을 ReactJS로 하는 법을 알아보자!
+            이 세계에서 input은 uncontrol임 value를 우리가 통제할수 없다는 것
+            
+            */
+        };
+        function KmToMiles(){
+            const [amount,setAmount] = React.useState(0);
+            const [invered, setInvered] = React.useState(false);
+
+            const  onChange = (evnet)=>{
+                //console.log("너무 덥다");
+                //console.log(event.target.value);
+                setAmount(event.target.value);
+            };
+            const reset = ()=> setAmount(0);
+
+            //반전 시켜주기위해 state를 하나더 만들어줌!
+            const onInvered = ()=> {
+                reset();
+                setInvered((current)=>!current)
+            };
+            return(
+                <div>
+                    <div>
+                        <lable htmlFor="KM">KM</lable><br/>
+                    <input value={invered ? amount*1.6 :amount } id = "KM" placeholder ="KM" type="number"  onChange ={onChange} disabled={invered} />
+                    </div>
+                    <div> 
+                        <lable htmlFor="Miles">Miles</lable><br/>
+                        <input value={invered ? amount : amount *0.62 } id = "Miles" placeholder ="Miles" type="number" onChange ={onChange} disabled={!invered} />
+                    </div>
+                    <button onClick ={reset} >Reset</button>
+                    <button onClick ={onInvered} >{invered ? "Turn Back":"Invered"}</button>
+                </div>
+            )
+        };
+        function App(){
+            const [index,setIndex] = React.useState("0");
+            const onSelect = (event)=>{
+                // console.log(event);
+                // console.log(event.target.value);
+                setIndex(event.target.value);
+            }
+            
+            return(
+                <div>
+                    <h1>Super Converter</h1>
+                    <select  value={index} onChange ={onSelect}>
+                        <option value = "0" > Select your units </option>
+                        <option value = "1" > Minutes & Hours </option>
+                        <option value = "2" > KM & Miles </option>    
+                    </select>
+                    <hr />
+                    {index === "0" ? "Please Select your units" : null}
+                    {index === "1" ? <MinutesToHours /> : null}
+                    {index === "2" ? <KmToMiles /> : null}
+                   
+                </div> 
+            );
+        };
+        ReactDOM.render(<App />,root); 
+    </script>
+</html>

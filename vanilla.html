@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <span> Total Clicks  : 0</span>
+        <button id ="btn">Click Me</button>
+    </body>
+    <script>
+        let counter = 0; 
+        const button = document.getElementByID("btn");
+        const span = document.querySelector("span");
+        function handleClick(){
+            console.log("i have beem clicked")
+            counter = counter + 1;
+            spans.innerText = `Total clicks: ${counter}`; //jqury.. html업데이트
+        }
+        button.addEverntListener("click", handleClick); //이벤트 감지
+    </script>
+</html>

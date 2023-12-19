@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        /*
+        문제, 데이터가 바뀔때마다 render() 함수를 반드시 호출해줘야함!
+        해서 더 나은 리렌더링 방식에 대해 알아볼 것임!
+        
+
+        react 어플리케이션을 다룰 때, 데이터를
+        */
+        const root = document.getElementById("root");
+        let counter = 0;
+        function App(){
+            //const data = React.useState();
+            //이전 1에서 사용했던 변수와 함수인자를 가진 배열을 리턴해줌.
+
+            let [counter , setCounter] = React.useState(0);
+            // const counter = data[0] , const modifier = data[1]
+
+           const onClick = ()=>{
+            //setCounter(counter + 1);
+            //react는 똑똑해서 state의 값이 바뀌면 다시 리렌더(refresh)해줌
+            
+            
+            setCounter((current)=> current +1 );
+            //현재의 값을 가지고외서 계산을 해야한다면 이렇게 해주는 것이 더좋음
+            //이 함수의 첫번째 인자의 값은 현재의 값으로 받는것임!
+            // 현재의 state를 기반으로 계산을 하고싶다면 이렇게 사용하면됨!!
+        
+            };
+
+            console.log(data); //개발자도구로보면 data는 Array를 가짐 => [undefined,f(함수)]
+            //[undefined,f(함수)] 에서 알아야할 것은 
+            //undefined = data  고, f = data를 바꿀때 사용하는 함수임
+            //useState 는 초기값을 설정해줄수 있음 = > React.useState(0);
+            return(
+                <div>
+                    <h3>Total Clicks  : {counter} </h3>
+                    <button onClick={onClick} >Click me</button>
+                </div>
+            );
+        }
+        ReactDOM.render(<App />,root); 
+    </script>
+</html>
